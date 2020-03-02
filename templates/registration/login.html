@@ -1,0 +1,14 @@
+{% extends "registration/base.html" %}
+
+{% block title %}로그인{% endblock %}
+{% block page %}login{% endblock %}
+
+{% block content %}
+
+ <form method="post" action="{% url 'login'%}">
+ {% csrf_token %}
+ <input type="hidden" name="next" value="" />
+ {{ form.as_p }}   <!--'as_p' 는 p태그로 form을 프린트한다는 의미이다.-->
+ <button type="submit">로그인</button> 
+ </form>
+{% endblock %}

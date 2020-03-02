@@ -1,6 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
+GENDER_CHOICES = (
+    (0, 'Male'),
+    (1, 'Female'),
+    (2, 'Not to disclose')
+)
+
 class UserManager(BaseUserManager):
     def _create_user(self, email, username, password, **extra_fields):
         # Create and save a user with the given username, email, and password.
@@ -37,6 +43,8 @@ class User(AbstractUser):
 
     username = models.CharField(max_length=30)
 
+    gender = models.SmallIntegerField(choices=GENDER_CHOICES)
+
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELD = [] # 필수로 받고 싶은 필드를 넣기 원래 소스 코드엔 email필드가 들어가지만 우리는 로그인을 이메일로한다.
@@ -56,3 +64,10 @@ class User(AbstractUser):
 # Mant-to-Many
 # Many-to-One 직접 comment 모델은 해당 알고리즘
 # One-to-One
+#non-default argument follows default argument 오류
+#"기본인수가 아닌 인수가 기본인수를 따른다 라는" 뜻이다.
+#즉, 함수 정의할때 꼭 넘겨야하는 인수를 먼저 쓰고
+#선택적 인수를 넘기라는 뜻이다. 
+
+""" 1.코드에 프로젝트 이름을 넣지 않는다.
+2.배포할 때 DEBUG = False 잊지말기. """
