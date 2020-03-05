@@ -8,11 +8,24 @@ def posts_list(requset):
 
 return render(request, 'blogs/posts_list.html', context={'posts' : posts})
 
-def post_detail(request):
+def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=Post_id)
     commets = Comment.objects.filter(post=post.id)
+    is_liked = False
 
-    return render(request, 'blogs/post_detail.html', context={'post' : post})
+    return render(request, 'blogs/post_detail.html', context={'post' : post, 'comments' : comments, :'is_liked' : is_liked, 'total_likes' :post.total_likes})
+@login_required
+@require_POST
+def post_like(request):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    is_liked = post.likes.filter(id=request.user.id).exists()
+
+    if is_liked:
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return HttpResponseRedirect(reverse('post_detail', kwargs={'post_id':post.id}))
+
 
 @login_required
 def post_write(request):
