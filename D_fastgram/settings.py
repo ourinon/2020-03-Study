@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS +=[
     'apis',
+    'contents',
 ]
 #특수한 프레임워크이다.(보안의 관한 얘기를 많이 담고있다.)
 MIDDLEWARE = [
